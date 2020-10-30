@@ -16,10 +16,10 @@ import Cursor3D from '../models/cursor';
 import Pictures from '../models/pictures';
 import PainPoints from '../models/painPoints';
 
-const cursor = new Cursor3D();
-const pictures = new Pictures();
-const painPoints = new PainPoints();
 const room = "test room"
+const cursor = new Cursor3D(room);
+const pictures = new Pictures(room);
+const painPoints = new PainPoints(room);
 
 const { TabPane } = Tabs;
 

@@ -1,5 +1,7 @@
 import { makeObservable, action, computed, observable, makeAutoObservable } from "mobx"
 
+import database  from './storage';
+
 const PAIN_MAP = {
   0: 'No Pain',
   1: 'Very Mild',
@@ -55,17 +57,59 @@ export class PainPoint {
   get key() {
     return this.date;
   }
+
+  get serialize() {
+    return {...this};
+  }
+
+  static deserialize(content) {
+    const result = new PainPoint("0", null);
+    Object.assign(result, content)
+    return result
+  }
 }
 
 export default class PainPointsContainer {
   painPoints = []
 
-  constructor() {
+  constructor(room) {
     makeAutoObservable(this);
+    this.room = room;
+    this.ref = database.ref('/pains/' + this.room)
+    this.ref.on('value', v => {
+      try {
+      this.deserialize(v.val());
+      } catch {
+      }
+    })
+  }
+
+  get serialize() {
+    const result = {}
+
+    for (const v of this.painPoints) {
+      result[v.key] = v.serialize
+    }
+
+    return result;
+  }
+
+  deserialize(content) {
+    this.painPoints.splice(0, this.painPoints.length);
+
+    for (const v of Object.values(content)) {
+      this.painPoints.push(PainPoint.deserialize(v));
+    }
+  }
+
+  save() {
+    const content = this.serialize
+    this.ref.set(content);
   }
 
   add(picture) {
     this.painPoints.push(picture);
+    this.save();
   }
 }
 
