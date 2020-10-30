@@ -66,7 +66,7 @@ function HumanBody({ cursor }) {
   return (
     <mesh
       geometry={gltf.nodes.human.geometry}
-      onClick={trueClick((e) => {
+      onPointerUp={trueClick((e) => {
         e.stopPropagation();
         const coords = e.intersections[0].point;
         cursor.setCoords(coords)
@@ -105,7 +105,7 @@ const ImageVisualizer = observer(({ image, preview_state }) => {
       <sprite
         scale={[0.1, 0.1, 0.1]}
         position={image.coords}
-        onClick={action(() => {
+        onPointerUp={action(() => {
           preview_state.image=image;
         })}
       >
