@@ -40,8 +40,13 @@ export default function Home({ room }) {
   }, []); //empty dependency array so it only runs once at render
 
   const [ mode, setMode ] = useState('images');
+  const [ preMode, setPreMode ] = useState('images');
 
-  const visualizer = <BodyVisualizer cursor={cursor} images={pictures} mode={mode} painPoints={painPoints}/>;
+  if (preMode != mode && (mode == 'images' || mode == 'pain')) {
+    setPreMode(mode);
+  }
+
+  const visualizer = <BodyVisualizer cursor={cursor} images={pictures} mode={preMode} painPoints={painPoints}/>;
   const video = <VideoTab room={room}/>;
 
   const mobile = width < 1000;
