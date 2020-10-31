@@ -204,7 +204,7 @@ export default function Viz({ cursor, images, mode, painPoints}) {
   return (
     <div style={style}>
       <ImagePreview preview_state={preview_state} />
-      <Canvas>
+      <Canvas style={{ height: '100%' }}>
         <Controls />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />

@@ -53,7 +53,7 @@ export default observer(({ room }) => {
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Name"
         loading={token === 'wait'}
-        enterButton="Join Video"
+        enterButton="Join"
         suffix={suffix}
         prefix={<UserOutlined />}
         onSearch={handleSubmit}

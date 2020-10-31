@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import BodyVisualizer from '../components/BodyVisualizer';
 import PicturesTab from '../components/Pictures';
@@ -31,8 +31,59 @@ const style = {
 
 
 export default function Home() {
+  const [width, setWidth] = useState(1000);
+  const elementRef = useRef(null);
+
+  useEffect(() => {
+    if (elementRef.current) {
+      setWidth(elementRef.current.getBoundingClientRect().width)
+    }
+  }, []); //empty dependency array so it only runs once at render
 
   const [ mode, setMode ] = useState('images');
+
+  const visualizer = <BodyVisualizer cursor={cursor} images={pictures} mode={mode} painPoints={painPoints}/>;
+  const video = <VideoTab room={room}/>;
+
+  const mobile = width < 1000;
+
+  const tabs = (
+    <Tabs type="card"  style={{ height: '100%', display:'relative' }} activeKey={mode} onChange={(e) => {setMode(e)}}>
+      {mobile ? (<>
+        <TabPane tab="Video" key="video">
+          { video }
+        </TabPane>
+        <TabPane id="hohohihi" tab="Avatar" key="visualizer">
+          { visualizer }
+        </TabPane>
+      </>):null}
+      <TabPane tab="Pictures" key="images">
+        <PicturesTab cursor={cursor} pictures={pictures} />
+      </TabPane>
+      <TabPane tab="Pain" key="pain">
+        <PainPointsTab cursor={cursor} painPoints={painPoints}/>
+      </TabPane>
+    </Tabs>
+  )
+
+  const content = (mobile ?
+    tabs
+  : (
+    <Row style={{ height: '100%' }}>
+      <Col span={4}>
+        { video }
+
+      </Col>
+      <Col span={8}>
+        { visualizer }
+      </Col>
+      <Col span={12}>
+        <div className="card-container">
+          { tabs }
+          </div>
+        </Col>
+    </Row>
+  ));
 
   return (
   <Layout className="layout" style={style}>
@@ -46,27 +97,8 @@ export default function Home() {
       </Menu>
     </Header>
     <Content style={{ padding: '30px', height: '100%'}}>
-      <div className="site-layout-content" style={{ height: '100%'}}>
-        <Row style={{ height: '100%' }}>
-          <Col span={4}>
-            <VideoTab room={room}/>
-          </Col>
-          <Col span={8}>
-              <BodyVisualizer cursor={cursor} images={pictures} mode={mode} painPoints={painPoints}/>
-          </Col>
-          <Col span={12}>
-            <div className="card-container">
-                <Tabs type="card" activeKey={mode} onChange={(e) => {setMode(e)}}>
-                  <TabPane tab="Pictures" key="images">
-                    <PicturesTab cursor={cursor} pictures={pictures} />
-                  </TabPane>
-                  <TabPane tab="Pain" key="pain">
-                    <PainPointsTab cursor={cursor} painPoints={painPoints}/>
-                  </TabPane>
-                </Tabs>
-              </div>
-            </Col>
-        </Row>
+      <div ref={elementRef} className="site-layout-content" style={{ height: '100%'}}>
+        { content }
       </div>
     </Content>
   </Layout>
