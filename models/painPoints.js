@@ -19,11 +19,12 @@ const PAIN_MAP = {
 
 
 export class PainPoint {
-  constructor(intensity, coords) {
+  constructor(intensity, coords, radius) {
     makeAutoObservable(this);
     this.intensity = parseInt(intensity);
     this.coords = coords;
     this.date = Date.now();
+    this.radius = radius;
   }
 
   get description() {

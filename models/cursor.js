@@ -4,13 +4,17 @@ import database  from './storage';
 
 export default class Cursor3D {
   coords = [];
+  radius = 2;
 
   constructor(room) {
     makeObservable(this, {
+      radius: observable,
       coords: observable.ref,
+
       setCoords: action,
       isSet: computed,
-      erase: action
+      erase: action,
+      setRadius: action
     });
 
     this.room = room;
@@ -31,6 +35,10 @@ export default class Cursor3D {
     });
   }
 
+  setRadius(newRadius) {
+    this.radius = newRadius
+  }
+
   setCoords(coords) {
     this.coords = Object.values(coords);
     this.ref.set(this.coords)
@@ -38,6 +46,7 @@ export default class Cursor3D {
 
   erase() {
     this.setCoords([0]);
+    this.setRadius(2)
   }
 
   get isSet() {

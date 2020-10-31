@@ -88,7 +88,7 @@ const CursorRender = observer(({ cursor }) => {
       <mesh
         position={cursor.coords}
       >
-        <sphereGeometry args={[0.03, 32, 32, 0, Math.PI * 2, 0, Math.PI]}/>
+          <sphereGeometry args={[0.03 / 2 * cursor.radius, 32, 32, 0, Math.PI * 2, 0, Math.PI]}/>
         <meshPhysicalMaterial
           color="blue"
           clearcoat={1}
@@ -133,7 +133,7 @@ const PainPointVisualizer = observer(({ painPoint }) => {
       <mesh
         position={painPoint.coords}
       >
-        <sphereGeometry args={[0.03, 32, 32, 0, Math.PI * 2, 0, Math.PI]}/>
+        <sphereGeometry args={[0.03 / 2 * painPoint.radius, 32, 32, 0, Math.PI * 2, 0, Math.PI]}/>
         <meshPhysicalMaterial
           color={COLOR_MAP[painPoint.colorMap]}
           clearcoat={1}

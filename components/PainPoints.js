@@ -45,22 +45,36 @@ export default observer(({ cursor, painPoints }) => {
           {...props} />
         </Col>
         <Col span={4}>
-          <Button style={{marginBottom: '10px'}} type="primary"
-            {...props}
-            onClick={() => {
-              try {
-                painPoints.add(new PainPoint(newIntensity, Object.values(cursor.coords)));
-                cursor.erase();
-              }
-              catch {
-              }
-            }}
-            icon={<PlusCircleOutlined />}
-          >
-          </Button>
+        </Col>
+      </Row>
+        {cursor.radius}
+      <Row>
+        <Col span={19} offset={1}>
+          <Slider included={true} value={cursor.radius} min={1} max={10} step={0.5} marks={{
+            1: 'Concentrated',
+            5: 'Wide'
+          }}
+            onChange={(v) => { cursor.setRadius(v) }}
+          {...props} />
+        </Col>
+        <Col span={4}>
         </Col>
       </Row>
       </div>
+      <Button style={{marginBottom: '10px'}} type="primary"
+        {...props}
+        onClick={() => {
+          try {
+            painPoints.add(new PainPoint(newIntensity, Object.values(cursor.coords), cursor.radius));
+            cursor.erase();
+          }
+          catch {
+          }
+        }}
+        icon={<PlusCircleOutlined />}
+      >
+            Record Pain
+      </Button>
       <Divider dashed />
       <h3>History</h3>
       <Table dataSource={[...painPoints.painPoints]} columns={columns} />
