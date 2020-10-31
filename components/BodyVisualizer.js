@@ -7,15 +7,18 @@ import { observer } from "mobx-react-lite"
 import GLTFLoader from 'three-gltf-loader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
+import { applyFilter } from './Filter';
+
 import { SearchOutlined } from '@ant-design/icons';
 
 let LAST_DRAGGING = 0;
+let change = false;
 
 const trueClick = (handler) => {
   return (...args) => {
     const now = Date.now();
     const diff = now - LAST_DRAGGING;
-    if (diff > 300) {
+    if (!change && diff > 300) {
       handler(...args);
     }
   }
@@ -34,7 +37,6 @@ extend({ OrbitControls })
 export function Controls() {
   const ref = useRef()
   const { camera, gl } = useThree()
-  let change = false;
   useFrame(() => ref.current.update())
   useEffect(() => {
     ref.current.addEventListener('start', () => {
@@ -56,12 +58,6 @@ export function Controls() {
 
 function HumanBody({ cursor }) {
   const gltf = useLoader(GLTFLoader, "/meshes/male.glb");
-  const textures = useLoader(TextureLoader, [
-    '/textures/Skin_Human_002_COLOR.png',
-    '/textures/Skin_Human_002_DISP.png',
-    '/textures/Skin_Human_002_NRM.png'])
-  textures.forEach((x) => x.repeat.set(100, 100));
-  const [color_map, disp_map, normal_map] = textures
 
   return (
     <mesh
@@ -73,7 +69,7 @@ function HumanBody({ cursor }) {
       })}
     >
       <meshPhysicalMaterial
-        map={color_map}
+        color="#926140"
         transparent={true}
         opacity={0.7}
         clearcoat={1}
@@ -148,7 +144,7 @@ const ImagesVisualizer = observer(({ images, preview_state}) => {
 });
 
 const PainPointsVisualizer = observer(({ painPoints }) => {
-  return painPoints.painPoints.map(x => <PainPointVisualizer painPoint={x} key={x.date}/>)
+  return painPoints.painPoints.filter(applyFilter).map(x => <PainPointVisualizer painPoint={x} key={x.date}/>)
 });
 
 function Visualizer({ cursor, images, preview_state, mode, painPoints }) {

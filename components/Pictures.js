@@ -8,6 +8,8 @@ import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 
 import { Picture } from '../models/pictures';
 
+import Filter, { applyFilter } from './Filter';
+
 export default observer(({ cursor, pictures }) => {
   const [taking, setTaking] = useState(false);
   const props = {};
@@ -44,11 +46,12 @@ export default observer(({ cursor, pictures }) => {
         Take new picture
       </Button>
     <h3> History </h3>
+    <Filter />
     <List
         itemLayout="vertical"
         size="large"
         grid={{ gutter: 0, column: 2 }}
-        dataSource={[...pictures.pictures]}
+        dataSource={pictures.pictures.filter(applyFilter)}
         pagination={{
           pageSize: 6
         }}

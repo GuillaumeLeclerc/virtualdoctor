@@ -7,6 +7,8 @@ import { Divider, Row, Col } from 'antd';
 
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 
+import Filter, { applyFilter } from './Filter';
+
 import { PainPoint } from '../models/painPoints';
 
 export default observer(({ cursor, painPoints }) => {
@@ -77,7 +79,8 @@ export default observer(({ cursor, painPoints }) => {
       </Button>
       <Divider dashed />
       <h3>History</h3>
-      <Table dataSource={[...painPoints.painPoints]} columns={columns} />
+      <Filter />
+      <Table dataSource={painPoints.painPoints.filter(applyFilter)} columns={columns} />
   </>;
 });
 
