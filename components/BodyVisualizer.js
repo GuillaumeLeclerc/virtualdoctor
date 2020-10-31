@@ -37,6 +37,8 @@ extend({ OrbitControls })
 export function Controls() {
   const ref = useRef()
   const { camera, gl } = useThree()
+  camera.position.z = 2.5
+
   useFrame(() => ref.current.update())
   useEffect(() => {
     ref.current.addEventListener('start', () => {
