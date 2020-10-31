@@ -29,7 +29,7 @@ const tailLayout = {
 
 const Demo = () => {
   const onFinish = values => {
-    Router.push(`/chat/{values.username}`);
+    Router.push(`/chat/${values.username}`);
   };
 
   const onFinishFailed = errorInfo => {
