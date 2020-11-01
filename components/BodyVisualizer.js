@@ -142,7 +142,7 @@ const PainPointVisualizer = observer(({ painPoint }) => {
 });
 
 const ImagesVisualizer = observer(({ images, preview_state}) => {
-  return images.pictures.map(x => <ImageVisualizer image={x} preview_state={preview_state} key={x.date}/>)
+  return images.pictures.filter(applyFilter).map(x => <ImageVisualizer image={x} preview_state={preview_state} key={x.date}/>)
 });
 
 const PainPointsVisualizer = observer(({ painPoints }) => {
