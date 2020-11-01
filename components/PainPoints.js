@@ -49,11 +49,10 @@ export default observer(({ cursor, painPoints }) => {
         <Col span={4}>
         </Col>
       </Row>
-        {cursor.radius}
       <Row>
         <Col span={19} offset={1}>
           <Slider included={true} value={cursor.radius} min={1} max={10} step={0.5} marks={{
-            1: 'Concentrated',
+            1: 'Local',
             10: 'Wide'
           }}
             onChange={(v) => { cursor.setRadius(v) }}
