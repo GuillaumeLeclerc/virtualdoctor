@@ -9,7 +9,7 @@ import PicturesTab from '../components/Pictures';
 import PainPointsTab from '../components/PainPoints';
 import VideoTab from '../components/Video';
 
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Alert, Layout, Menu, Breadcrumb } from 'antd';
 
 import { Row, Col } from 'antd';
 import { Tabs, Divider } from 'antd';
@@ -65,6 +65,13 @@ const Demo = () => {
         />
       </Form.Item>
 
+    <Alert
+      message="Login details"
+      description="During testing, any username password will be accepted"
+      type="info"
+      showIcon
+    />
+    <br />
         <Form.Item style={{'textAlign': 'center'}}>
           <Button type="primary" htmlType="submit">
             Submit
