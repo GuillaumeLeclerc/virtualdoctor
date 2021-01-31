@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start --port $PORT"
   },
   "dependencies": {
     "ant-design-pro": "^2.3.2",
@@ -13,7 +13,6 @@
     "firebase": "^8.0.0",
     "mobx": "^6.0.1",
     "mobx-react": "^7.0.0",
-    "next": "9.5.3",
     "next-transpile-modules": "^4.1.0",
     "ng-zorro-antd": "^10.0.2",
     "react": "16.13.1",
@@ -24,5 +23,8 @@
     "three-gltf-loader": "^1.111.0",
     "twilio": "^3.50.0",
     "twilio-video": "^2.7.3"
+  },
+  "devDependencies": {
+    "next": "^9.5.3"
   }
 }
